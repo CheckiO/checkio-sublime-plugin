@@ -1,0 +1,13 @@
+[
+    {
+        "caption": "CheckiO",
+        "mnemonic": "C",
+        "id": "checkio",
+        "children":
+        [
+            { "command": "run", "caption": "Run", "mnemonic": "R" },
+            { "command": "check", "caption": "Check", "mnemonic": "C" }
+        ]
+    }
+]
+
