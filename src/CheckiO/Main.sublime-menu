@@ -1,13 +1,19 @@
 [
     {
-        "caption": "CheckiO",
-        "mnemonic": "C",
-        "id": "checkio",
+        "caption": "Tools",
+        "id": "tools",
         "children":
         [
-            { "command": "run", "caption": "Run", "mnemonic": "R" },
-            { "command": "check", "caption": "Check", "mnemonic": "C" }
+            {
+                "caption": "CheckiO",
+                "mnemonic": "C",
+                "id": "checkio",
+                "children":
+                [
+                    { "command": "run", "caption": "Run", "mnemonic": "R" },
+                    { "command": "check", "caption": "Check", "mnemonic": "C" }
+                ]
+            }
         ]
     }
 ]
-

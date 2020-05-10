@@ -1,0 +1,10 @@
+[
+	{
+	    "keys": ["ctrl+/"],
+	    "command": "run"
+	},
+	{
+	    "keys": ["ctrl+shift+/"],
+	    "command": "check"
+	},
+]
