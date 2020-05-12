@@ -34,7 +34,6 @@ Link for sharing own solutions:
         sublime.active_window().run_command("show_panel", {"panel": "console", "toggle": False})
         window.focus_group(window.active_group())
         first_line = code.strip().splitlines()[0]
-        print(first_line)
         if not first_line.startswith('#!') or 'checkio' not in first_line:
             print('It is not a CheckiO solution')
             return
