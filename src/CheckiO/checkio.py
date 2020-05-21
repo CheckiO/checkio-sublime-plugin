@@ -5,6 +5,7 @@ import sys
 import shlex
 import json
 
+IS_WIN = sys.platform == 'win32'
 SYSTEM_BLOCK_START = '---SYSTEMBLOCKSTART---'
 SYSTEM_BLOCK_END = '---SYSTEMBLOCKEND---'
 
@@ -40,17 +41,23 @@ Link for sharing own solutions:
         self.run_next(code, first_line[2:])
 
     def run_next(self, code, first_line):
-        self.exec_command(first_line + ' ' + self.view.file_name())
+        if IS_WIN:
+            self.exec_command(first_line + ' \'' + self.view.file_name() + '\'')
+        else:
+            self.exec_command(first_line + ' ' + shlex.quote(self.view.file_name()))
 
     def exec_command(self, exec_line):
         print('>>> {}'.format(exec_line))
-        commands = shlex.split(exec_line)
-        proc = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if IS_WIN:
+            commands = ' '.join(exec_line.split(' ')[1:])
+        else:
+            commands = shlex.split(exec_line)
+        proc = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, universal_newlines=True)
 
         is_capturing_sys = False
         sysinfo = ''
         while proc.poll() is None:
-            data = proc.stdout.readline().decode('utf-8')
+            data = proc.stdout.readline()
             if data.strip() == SYSTEM_BLOCK_START:
                 is_capturing_sys = True
             elif data.strip() == SYSTEM_BLOCK_END:
@@ -59,7 +66,7 @@ Link for sharing own solutions:
                 sysinfo += data
             else:
                 print(data, end="")
-        print(proc.stderr.read().decode('utf-8'))
+        print(proc.stderr.read())
         print('<<< Done')
 
         if sysinfo:
