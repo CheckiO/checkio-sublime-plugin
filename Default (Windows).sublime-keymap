@@ -1,10 +1,10 @@
 [
 	{
-	    "keys": ["ctrl+n"],
+	    "keys": ["ctrl+'"],
 	    "command": "run"
 	},
 	{
-	    "keys": ["ctrl+shift+n"],
+	    "keys": ["ctrl+shift+'"],
 	    "command": "check"
 	},
 ]
