@@ -52,7 +52,7 @@ Link for sharing own solutions:
             commands = ' '.join(exec_line.split(' ')[1:])
         else:
             commands = shlex.split(exec_line)
-        proc = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, universal_newlines=True)
+        proc = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=IS_WIN, universal_newlines=True)
 
         is_capturing_sys = False
         sysinfo = ''
