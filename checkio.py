@@ -9,6 +9,36 @@ IS_WIN = sys.platform == 'win32'
 SYSTEM_BLOCK_START = '---SYSTEMBLOCKSTART---'
 SYSTEM_BLOCK_END = '---SYSTEMBLOCKEND---'
 
+class SyncpyCommand(sublime_plugin.TextCommand):
+    domain = 'py'
+    def run(self, edit):
+        sublime.set_timeout_async(self.run_release, 0)
+
+    def run_release(self):
+        window = self.view.window()
+
+        sublime.active_window().run_command("show_panel", {"panel": "console", "toggle": False})
+        window.focus_group(window.active_group())
+
+        if IS_WIN:
+            commands = ['checkio', '--domain=' + self.domain, 'sync']
+        else:
+            commands = ['/usr/bin/env', 'checkio', '--domain=' + self.domain, 'sync']
+
+        print('>>> {}'.format(' '.join(commands)))
+
+        proc = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=IS_WIN, universal_newlines=True)
+        while proc.poll() is None:
+            data = proc.stdout.readline()
+            print(data, end="")
+        print(proc.stderr.read())
+        print('<<< Done')
+
+
+class SyncjsCommand(SyncpyCommand):
+    domain = 'js'
+
+
 class RunCommand(sublime_plugin.TextCommand):
     def sysinfo__passed(self, data):
         sublime.message_dialog('''
